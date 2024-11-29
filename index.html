@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>เว็บไซต์แรกของฉัน</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LINE LIFF Google Form</title>
+  <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js"></script>
 </head>
 <body>
-    <h1>ยินดีต้อนรับสู่เว็บไซต์ของฉัน</h1>
-    <p>นี่คือย่อหน้าแรก</p>
+  <h1>กรอกฟอร์มผ่าน LINE</h1>
+  <form id="googleForm" method="POST" action="https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse">
+    <label>
+      LINE User ID:
+      <input type="text" name="entry.USER_ID" id="lineUserId" readonly />
+    </label>
+    <label>
+      ชื่อผู้ใช้:
+      <input type="text" name="entry.DISPLAY_NAME" id="lineDisplayName" readonly />
+    </label>
+    <!-- เพิ่มคำถามอื่นๆ ของฟอร์ม -->
+    <button type="submit">ส่งคำตอบ</button>
+  </form>
+
+  <script>
+    // เริ่มต้น LIFF
+    async function initLiff() {
+      await liff.init({ liffId: "U2e6a34722dfd21f930191d1f05480a13" });
+      if (!liff.isLoggedIn()) {
+        liff.login();
+      }
+      const profile = await liff.getProfile();
+      document.getElementById("lineUserId").value = profile.userId;
+      document.getElementById("lineDisplayName").value = profile.displayName;
+    }
+    initLiff();
+  </script>
 </body>
 </html>
