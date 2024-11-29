@@ -1,38 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LINE LIFF Google Form</title>
-  <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js"></script>
-</head>
-<body>
-  <h1>กรอกฟอร์มผ่าน LINE</h1>
-  <form id="googleForm" method="POST" action="https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse">
-    <label>
-      LINE User ID:
-      <input type="text" name="entry.USER_ID" id="lineUserId" readonly />
-    </label>
-    <label>
-      ชื่อผู้ใช้:
-      <input type="text" name="entry.DISPLAY_NAME" id="lineDisplayName" readonly />
-    </label>
-    <!-- เพิ่มคำถามอื่นๆ ของฟอร์ม -->
-    <button type="submit">ส่งคำตอบ</button>
-  </form>
 
-  <script>
-    // เริ่มต้น LIFF
-    async function initLiff() {
-      await liff.init({ liffId: "U2e6a34722dfd21f930191d1f05480a13" });
-      if (!liff.isLoggedIn()) {
-        liff.login();
-      }
-      const profile = await liff.getProfile();
-      document.getElementById("lineUserId").value = profile.userId;
-      document.getElementById("lineDisplayName").value = profile.displayName;
+<head>
+  <title>กำลังเข้าสู่ Form</title>
+  <style>
+    .centerScreen {
+      margin-top: 20;
+      margin-right: auto;
+      margin-bottom: 20;
+      margin-left: auto;
     }
-    initLiff();
-  </script>
+  </style>
+</head>
+
+<body style="background-color: powderblue;">
+  <div class="centerScreen">
+    <center>
+      <img src="https://drive.google.com/uc?id=1mEyShWSX9rPf4klIDeMTlHAOc4BsySFK" height="200px" , width="200px" />
+      <h1>
+        กำลังเข้าสู่ Google Form กรุณารอซักครู่
+      </h1>
+    </center>
+  </div>
 </body>
-</html>
+<footer>
+  <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+  <script>
+    /// Config Your LIFF ID Here
+    const liffId = "2006619153-x4aDdaYG";
+    /// Config Your LIFF ID Here
+    liff.ready
+      .then(() => {
+        if (liff.isLoggedIn()) {
+          return liff.getProfile();
+        } else {
+          liff.login({
+            redirectUri: "Redirect URL",
+          });
+        }
+      })
+      .then((profile) => {
+        window.location.replace(
+          `https://docs.google.com/forms/d/e/1FAIpQLSfjwwVCh5fRFXoAZ9aSbQH-2qFCwGJWvAAnqDs6vrsfX0cmCg/viewform?usp=pp_url&entry.95691664=${profile.userId}&entry.545875775=${profile.displayName}&entry.683902678=${profile.pictureUrl}&entry.758654552=${profile.statusMessage}`
+        );
+      });
+    liff.init(
+      {
+        liffId: liffId,
+      },
+      () => {},
+      (err) => {
+        window.alert(err);
+      }
+    );
+  </script>
+</footer>
